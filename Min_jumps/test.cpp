@@ -1,72 +1,64 @@
-/*
-* @Author: kabbo
-* @Date:   2020-06-24 08:40:07
-* @Last Modified by:   kabbo
-* @Last Modified time: 2020-06-24 08:49:58
-*/
-#include<bits/stdc++.h>
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <cstring>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <set>
+#include <vector>
 using namespace std;
-#define pii pair<long long,long long>
-#define endl '\n'
-#define ull unsigned long long
-#define ll int64_t
-#define ar array
+
 // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0200r0.html
-template<class Fun>
-class y_combinator_result {
-	Fun fun_;
+template<class Fun> class y_combinator_result {
+    Fun fun_;
 public:
-	template<class T>
-	explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {}
-
-	template<class ...Args>
-	decltype(auto) operator()(Args &&...args) {
-		return fun_(std::ref(*this), std::forward<Args>(args)...);
-	}
+    template<class T> explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {}
+    template<class ...Args> decltype(auto) operator()(Args &&...args) { return fun_(std::ref(*this), std::forward<Args>(args)...); }
 };
+template<class Fun> decltype(auto) y_combinator(Fun &&fun) { return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun)); }
 
-template<class Fun>
-decltype(auto) y_combinator(Fun &&fun) {
-	return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
-}
-const int mod = 1e9 + 7;
-using u64 = uint64_t;
-using u128 = __uint128_t;
-#define sc1(x) scanf("%lld",&(x));
-mt19937 rnd(chrono::steady_clock::now().time_since_epoch().count());
-/*Well, probably you won't understand anything,
-because you didn't try to understand anything in your life,
-you expect all hard work to be done for you by someone else.
-Let's start*/
-void solve() {
-	int n;
-	cin >> n;
-	vector<int>a(n + 1);
-	for (int i(1); i <= n; ++i)
-		cin >> a[i];
-	vector<ll>dp(n + 1, 1e9);
-	// for (int i(1); i <= n; ++i)
-	// 	cout << dp[i] << " ";
-	dp[n] = 0;
-	for (int i(n - 1); i >= 1; --i) {
-		for (int j(1); j <= a[i]; ++j) {
-			if (i + j <= n) {
 
-				dp[i] = min(dp[i], dp[i + j] + 1);
-			}
-		}
-	}
-	cout << dp[1] << endl;
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template < typename T_container, typename T = typename enable_if < !is_same<T_container, string>::value, typename T_container::value_type >::type > ostream & operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+
+void dbg_out() { cerr << endl; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
+#ifdef NEAL_DEBUG
+#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
+#else
+#define dbg(...)
+#endif
+
+
+void run_case() {
+    int N, K;
+    cin >> N >> K;
+    K--;
+
+    if (N % 2 == 0) {
+        cout << K % N + 1 << '\n';
+        return;
+    }
+
+    cout << (K + K / (N / 2)) % N + 1 << '\n';
 }
+
 int main() {
+    ios::sync_with_stdio(false);
+#ifndef NEAL_DEBUG
+    cin.tie(nullptr);
+#endif
 
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-	// int t;
-	// cin >> t;
-	// for (int i(1); i <= t; ++i) {
-	// 	printf("Case %d:\n", i);
-	solve();
-	//}
-	return 0;
+    int tests;
+    cin >> tests;
+
+    while (tests-- > 0)
+        run_case();
 }
