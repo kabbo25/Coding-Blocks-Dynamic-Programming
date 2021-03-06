@@ -173,32 +173,35 @@ struct _m_int {
 const int MOD = 1e9 + 7;
 using mod_int = _m_int<MOD>;
 void solve() {
-	string str;
-	cin >> str;
-	int n = str.size();
-	mod_int dp[n + 1];
-	dp[0] = 1;
-	map<char, int>mp;
-	for (int i(1); i <= n; ++i) {
-		dp[i] = 2 * dp[i - 1];
-		char ch = str.at(i - 1);
-		if (mp.count(ch)) {
-			int idx = mp[ch];
-			dp[i] -= dp[idx - 1];
-		}
-		mp[ch] = i;
+	int n;
+	cin >> n;
+	int mx = 0;
+	int ans = 0;
+	vector<int>v(n);
+	for (int i(0); i < n; ++i) {
+		cin >> v.at(i);
+		mx = max(mx, v.at(i));
 	}
-	cout << dp[n] << endl;
+	int cur = 0;
+	for (auto& x : v) {
+		if (x == mx)cur++;
+		else {
+			ans = max(ans, cur);
+			cur = 0;
+		}
+	}
+	ans = max(ans, cur);
+	cout << ans << endl;
 }
 int main() {
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
-	int t;
-	cin >> t;
-	for (int i(1); i <= t; ++i) {
-		//printf("Case %d:\n", i);
-		solve();
-	}
+	// int t;
+	// cin >> t;
+	// for (int i(1); i <= t; ++i) {
+	//printf("Case %d:\n", i);
+	solve();
+	//}
 	return 0;
 }
