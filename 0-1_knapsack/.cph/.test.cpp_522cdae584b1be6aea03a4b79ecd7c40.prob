@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"d:\\Coding Blocks Dp\\Coding-Blocks-Dynamic-Programming\\0-1_knapsack\\test.cpp","tests":[{"id":1615056910179,"input":"5 4\n1 2 3 2 2 \n8 4 0 5 3","output":"13"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Coding Blocks Dp\\Coding-Blocks-Dynamic-Programming\\0-1_knapsack\\test.cpp","group":"local","local":true}
